@@ -50,13 +50,16 @@ function login(req, res) {
           if (isMatch) {
             const token = jwt.sign(
               { email: result.email, id: result.id },
-              "secret",
-              { expiresIn: "1h" }
-            );
-            res.status(200).json({
-              message: "Login successful",
-              token: token,
-            });
+              process.env.JWT_KEY, function(err, token) {
+                res.status(200).json({
+                  message: "Authentication successful",
+                  token: token,
+                  expiresIn: 3600,
+                  userId: result.id,
+                });
+              }
+            //   { expiresIn: "1h" }
+            )
           } else {
             res.status(401).json({
               message: "Invalid credentials",
