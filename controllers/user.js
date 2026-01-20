@@ -21,7 +21,7 @@ function register(req, res) {
               .then((result) => {
                 res.status(201).json({
                   message: "User created successfully",
-                  user: result,
+                  user: result.name,
                 });
               })
               .catch((error) => {
@@ -54,12 +54,8 @@ function login(req, res) {
                 res.status(200).json({
                   message: "Authentication successful",
                   token: token,
-                  expiresIn: 3600,
-                  userId: result.id,
                 });
-              }
-            //   { expiresIn: "1h" }
-            )
+              });
           } else {
             res.status(401).json({
               message: "Invalid credentials",
